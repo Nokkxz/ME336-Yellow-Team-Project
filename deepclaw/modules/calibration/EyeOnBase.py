@@ -179,10 +179,10 @@ def matrix2rv(matrix4):
 
 
 if __name__ == "__main__":
-    '''
-    collect_flag = True
-    calculate_flag = False
-    '''
+
+    # collect_flag = True
+    # calculate_flag = False
+
     collect_flag = True
     calculate_flag = True
     if collect_flag:
@@ -202,8 +202,9 @@ if __name__ == "__main__":
         robot = FrankaController('./configs/basic_config/franka.yaml')
         calib_ins = Calibration(robot, camera, './configs/basic_config/cali3D.yaml', main_sensor='color')
         calib_ins.run()
-    time.time(2)
+    time.time()
+    time.sleep(6)
     if calculate_flag:
         c_t_b = load_calibration_matrix('./configs/calib_3d.npz')
-        np.save('./configs/Yellow_1.npy', c_t_b)
+        np.save('./configs/E_T_B.npy', c_t_b)
         print(c_t_b)
