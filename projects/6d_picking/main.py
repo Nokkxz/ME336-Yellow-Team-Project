@@ -1,5 +1,5 @@
 # MIT License.
-# Copyright (c) 2021 by BioicDL. All rights reserved.
+# Copyright (c) 2021 by BionicDL. All rights reserved.
 # Created by LiuXb on 2021/1/31
 # -*- coding:utf-8 -*-
 
@@ -56,7 +56,7 @@ def pick_place(robot_server: ArmController, gripper_server: object, home_joint, 
     robot_server.move_j(home_joint, 0.5, 0.5)
 
 
-def detectObject(detector_algo: Yolo5, color, crop_bounding=[300, 1000, 300, 1000]):
+def detectObject(detector_algo: Yolo5, color, crop_bounding=[178,511,134,1158]):
     region_class = detector_algo.detect(color)
     if region_class is None:
         return False, None, None, None
@@ -72,8 +72,7 @@ def detectObject(detector_algo: Yolo5, color, crop_bounding=[300, 1000, 300, 100
         # col_min, row_min, col_max, row_max
         uv_mid_c = (uv_temp[0] + uv_temp[2]) / 2.0
         uv_mid_r = (uv_temp[1] + uv_temp[3]) / 2.0
-        if uv_mid_c < crop_bounding[2] - 20 or uv_mid_c > crop_bounding[3] + 10 or uv_mid_r < crop_bounding[
-            0] - 20 or uv_mid_r > crop_bounding[1] + 10:
+        if uv_mid_c < crop_bounding[2] - 20 or uv_mid_c > crop_bounding[3] + 10 or uv_mid_r < crop_bounding[0] - 20 or uv_mid_r > crop_bounding[1] + 10:
             continue
         else:
             uv_roi.append(uv_temp)
@@ -112,7 +111,7 @@ if __name__ == '__main__':
         depth_img = frame.depth_image[0]
         # 识别物体
         # region_class = object_detector.detect(color)
-        ret, uv, cla, cfi = detectObject(object_detector, color, crop_bounding=[300, 1000, 300, 1000])
+        ret, uv, cla, cfi = detectObject(object_detector, color, crop_bounding=[178,511,134,1158])#[157, 513, 338, 1027]
         if not ret:
             continue
         if cla not in [0, 1, 2, 3]:
@@ -123,10 +122,20 @@ if __name__ == '__main__':
         # depth intrinsics
         width = 1280
         hight = 720
-        fx = 640.983
-        fy = 640.983
-        cx = 641.114
-        cy = 368.461
+        # fx = 640.983
+        # fy = 640.983
+        # cx = 641.114
+        # cy = 368.461
+
+        # fx = 931.6937866210938
+        # fy = 931.462890625
+        # cx = 624.7894897460938
+        # cy = 360.5186767578125
+
+        fx = 928.18487549
+        fy = 928.0357666
+        cx = 652.10028076
+        cy = 362.49530029
         pc = []
         for i in range(uv[1], uv[3]):
             temp_pc = []
@@ -141,14 +150,14 @@ if __name__ == '__main__':
             pc.append(temp_pc)
         pc = np.array(pc).reshape((-1, 3))
         # Todo: filter plane
-        plane_model = [-0.01751999, 0.12454981, 0.62191331, -0.77291929]
+        plane_model =[-0.00428994 , 0.11797901 , 0.62502025 ,-0.7716296 ]
         new_pc = []
         for i in range(len(pc)):
             if pc[i][0] * plane_model[0] + pc[i][1] * plane_model[1] + pc[i][2] * plane_model[2] + plane_model[3] < 0:
                 new_pc.append(pc[i])
 
         new_pc = np.array(new_pc)
-        show_flag = False
+        show_flag = True
         if show_flag:
             fig = plt.figure("pcs")
             ax = fig.add_subplot(111, projection="3d")
@@ -198,13 +207,13 @@ if __name__ == '__main__':
         print('=========== modified -z grasping_in_base ==============')
         print(grasping_in_base)
         # gripper to flange matrix
-        E_T_F = np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0.133], [0, 0, 0, 1]])
+        E_T_F = np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0.1], [0, 0, 0, 1]])
         # grasping_in_base = np.dot(grasping_in_base, E_T_F)
         grasping_in_base = np.dot(grasping_in_base, np.linalg.inv(E_T_F))
         r = R.from_matrix(grasping_in_base[0: 3, 0: 3])
         rot = r.as_euler('xyz', degrees=False)
         transfer = grasping_in_base[0:3, 3]
-        measure_z = 0.12  # meter
+        measure_z = -0.06  # meter
         temp_pose = [transfer[0], transfer[1], transfer[2] + measure_z, rot[0], rot[1], rot[2]]
 
         # z offset ,  pick up
