@@ -52,4 +52,4 @@ print(H_base_board)
 print("The rpy of the chessboard with reference to the robot base")
 rpy = R.from_matrix(H_base_board[:3,:3]).as_euler('xyz', degrees=True)  
 print(rpy)
-print(mtx)
+print(mtx) # print the inner parameters of the camera
