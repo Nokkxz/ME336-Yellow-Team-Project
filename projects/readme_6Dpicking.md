@@ -14,7 +14,9 @@ Finally, we can control the arm to pick the target with the point cloud informat
 
 # Demo video
 
-<video src="./Source/demo.mp4" width="800px" height="600px" controls="controls"></video>
+<img src="./Source/demo.gif" width="700px" height="400px" controls="controls"></img>
+
+The demo video can be seen in [feishu doc](https://bionicdl.feishu.cn/docs/doccnIlIrbwQbURpeiJHcO4uuYN).
 
 # Contact
 
