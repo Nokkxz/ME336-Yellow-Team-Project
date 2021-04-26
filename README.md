@@ -1,4 +1,4 @@
-# ME336-Yellow-Team-Project1
+# ME336-Yellow-Team-Project1[pro1](/projects/readme_2Dpicking.md)
 Project source code for Collaborative Robot Learning
 ## Instruction
 In the industrial field, picking target objects in 2D plane with the manipulator arm is applied in many scenarios. This 2D-picking project is  to reproduce the whole procedure of  picking objects with the manipulator arm(Franka) in 2D plane, basing on the result of visual observation(RGB images) and object detection(YOLO5).
