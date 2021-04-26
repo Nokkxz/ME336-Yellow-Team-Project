@@ -296,7 +296,7 @@ We assume that the idea of improving the mark is based on the fact that changing
 
 We found out that the picking accuracy was high when the target lies near to the center of the calibration space. Nevertheless, the accuracy declines sharply as the target moves away from the center.
 
-![img](projects/Source/12.png)
+![img](/Source/12.png)
 
 ![img](/images/13.png)
 
