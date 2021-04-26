@@ -4,7 +4,7 @@
 
 In the industrial field, controlling the 6D position and orientation of the end-effector of the manipulator arm is required in many scenarios, such as picking target objects in 3D workplace. This 3D-picking project is to reproduce the whole procedure of picking objects with the manipulator arm(Franka) in 3D workspace, basing on the result of visual observation(RGB images) and object detection(YOLO5).
 
-![img](/images/1.png)
+![img](./Source/1.png)
 
 Firstly, in this work, we need to complete the hand-eye calibration. With the eye-to-hand camera fixed, the calibration plate is connected on the end of the arm. When the calibration plate moves with the arm, the position and orientation will be recorded. Then, we can get the hand-eye transform matrix. In this way, coordinate transformation can be achieved. 
 
@@ -221,9 +221,9 @@ sh ./deepclaw/modules/end2end/yolov5/weights/download_weights.sh
 
 This procedure will complete the 3D hand-eye calibration between the camera and the robot arm. In particular, we will get a hand-eye transform matrix which gives the relative pose of robot arm$$p'(x',y',z')$$ to camera$$p(x,y,z)$$.
 
-![img](/images/2.png)
+![img](./Source/2.png)
 
-![img](/images/3.png)
+![img](./Source/3.png)
 
 1. Modify the configuration file
     1. Open the file ME336Spring/configs/basic_config/cail3D.yaml
