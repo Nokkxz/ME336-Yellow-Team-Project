@@ -14,9 +14,7 @@ Finally, we can control the arm to pick the target with the point cloud informat
 
 # Demo video
 
-<img src="./images/demo.gif" width="700px" height="400px" controls="controls"></img>
-
-The demo video can be seen in [feishu doc](https://bionicdl.feishu.cn/docs/doccnIlIrbwQbURpeiJHcO4uuYN).
+<video src="./Source/demo.mp4" width="800px" height="600px" controls="controls"></video>
 
 # Contact
 
@@ -229,29 +227,29 @@ This procedure will complete the 3D hand-eye calibration between the camera and 
     1. Open the file ME336Spring/configs/basic_config/cail3D.yaml
     2. Modify the parameters of offset in E_T_F values. Please pay attention to the status of the robot arm. (The gripper will make the coordinate direction change.)
 
-![img](/images/4.png)
+![img](./Source/4.png)
 
 1. Run the hand eye calibration
     1. Open this  file in PyCharm ME336-2021Spring/deepclaw/modules/calibration/EyeOnBase.py . It also needs to change the saving path for calibration data and calculation outcoming. If you need to collect the calibration data, change collect_flag =True .
 
-![img](/images/5.png)
+![img](./Source/5.png)
 
 1. Run the EyeOnBase.py file. The robot arm will move on the generating mesh according to the given home position and step length. You can get the camera information by realsense in time.
 
-![img](/images/6.png)
+![img](./Source/6.png)
 
 1. After running, the robot arm ends with completing the calibration. If you choose to collect data, you will obtain .npz and .npy files in the appointed saving path.
 
 1. Plane calculation
     1. Open realsense-viewer, and then turn Stereo Module on.
 
-![img](/images/7.png)
+![img](./Source/7.png)
 
 1. Choose four random points on the conveyor belt, and obtain the coordinate values$$(x,y,z)$$. Then close RealSense.
 2. Open the file plane_calculate.py and fill the ***xyzs*** with four point coordinate values. Then run this file. 
 3. We can obtain the output as model para, then copy this data to main.py in plane_model.
 
-![img](/images/8.png)
+![img](./Source/8.png)
 
 ## 6-D picking
 
@@ -268,11 +266,11 @@ temp_pose = [transfer[0], transfer[1], transfer[2] + measure_z, rot[0], rot[1], 
 
 1. Open the realsense-viewer and choose a rectangle as the recognition region for the camera.
 
-![img](/images/9.png)
+![img](./Source/9.png)
 
 1. Record the (x1,y1) of the up-left point and (x2,y2) of the down-right point then modify the value of the crop_bounding  =[y1,y2,x1,x2].
 
-![img](/images/10.png)
+![img](./Source/10.png)
 
 1. Place a bottle on the convey belt and ensure that there is no other object in the view.
 2. Run the main.py and observe the robot arm on how to collect the waste.
@@ -283,7 +281,7 @@ temp_pose = [transfer[0], transfer[1], transfer[2] + measure_z, rot[0], rot[1], 
 
 According to the steps in the experimental manual, we can complete the 3D calibration and the subsequent 6D grasping process. However, at the same time, during the 6D grasping, large errors often occur when the manipulator moves to grasp, and even lead to the failure of grasping.It is difficult for us to improve the hardware of the manipulator at the present stage, so we hope to improve the accuracy of grasping movement by improving the 3D calibration method and modifying the camera to reduce the errors caused by the camera itself. 
 
-![img](/images/11.png)
+![img](./Source/11.png)
 
 
 We assume that the idea of improving the mark is based on the fact that changing the calibration area can have a great impact on the grasping accuracy of the manipulator during 2D calibration and grabbing. Therefore, it is speculated that improvement can be made in this aspect in 3D calibration.In addition, since the manipulator arm needs to move in a 4x4x4 grid in 3D calibration, it can be considered to change the step of each movement to test whether the grasping accuracy is affected.
@@ -296,31 +294,31 @@ We assume that the idea of improving the mark is based on the fact that changing
 
 We found out that the picking accuracy was high when the target lies near to the center of the calibration space. Nevertheless, the accuracy declines sharply as the target moves away from the center.
 
-![img](/Source/12.png)
+![img](./Source/12.png)
 
-![img](/images/13.png)
+![img](./Source/13.png)
 
-![img](/images/14.png)
+![img](./Source/14.png)
 
-![img](/images/15.png)
+![img](./Source/15.png)
 
 After excluding the problem of mis- detection or path planning, we narrow down the problem to the camera.
 
 First, we tried to enlarge the calibration space to improve  the performance. We increased the stride of calibration to expand the space. However, the accuracy did not increase significantly.
 
-![img](/images/16.png)
+![img](./Source/16.png)
 
-![img](/images/17.png)
+![img](./Source/17.png)
 
 
 Then, through reading the source codes, we discovered that the problem might result from the given camera intrinsic matrix since our camera could be different.
 
 After the correct intrinsic matrix was calculated, we updated the focal length parameters fx, fy, cx, cy used in calibration.
 
-![img](/images/18.png)
+![img](./Source/18.png)
 
 The picking accuracy was highly improved.
 
-![img](/images/19.png)
+![img](./Source/19.png)
 
-![img](/images/20.png)
+![img](./Source/20.png)
