@@ -14,10 +14,10 @@ _root_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__f
 sys.path.append(_root_path)
 os.chdir(_root_path)
 
-
+import time
 import os
 import glob
-from rembg.bg import remove
+# from rembg.bg import remove
 import numpy as np
 import io
 import json
@@ -27,25 +27,6 @@ import cv2
 import math
 from sklearn.decomposition import PCA
 from deepclaw.utils.ForegroundDetector import BackgroundDetector
-
-
-def rembg_detector(file_path):
-    """ Rembg is a tool to remove images background. https://github.com/danielgatis/rembg"""
-    with open(file_path, "rb") as input:
-        if hasattr(input, "buffer"):
-            ss = input.buffer.read()
-        else:
-            ss = input.read()
-    result = remove(ss)
-    img = Image.open(io.BytesIO(result)).convert("RGBA")
-    img = np.array(img)
-    # alpha value
-    mask_binary = img[:, :, 3]
-    mask_binary[mask_binary > 10] = 255
-    mask_binary[mask_binary <= 10] = 0
-    # plt.imshow(img)
-    # plt.show()
-    return mask_binary
 
 
 def get_file_path(folder_path, image_type='jpg'):
@@ -65,10 +46,13 @@ def save_label(file_list, label_path, region_parameter, obj_class=None, detect_a
         # generate object mask
         bi_mask = None
         if detect_algo == 'rembg':
-            bi_mask = rembg_detector(file_list[i])
+            bi_mask = mask_detector.rembg_from_array(color_img)
+            # bi_mask = rembg_from_file(file_list[i])
         elif detect_algo == 'colorFilter':
-            lower = np.array([10, 20, 0])
-            upper = np.array([60, 80, 40])
+            # lower = np.array([10, 20, 0])
+            # upper = np.array([60, 80, 40])
+            lower = np.array([10, 65, 0])
+            upper = np.array([60, 95, 40])
             bi_mask = mask_detector.filterColor(color_img, lower=lower, upper=upper)
         elif detect_algo == 'mog2':
             "for mog2, the ref_frame is a video, xx.avi for example"
@@ -164,9 +148,20 @@ def save_label(file_list, label_path, region_parameter, obj_class=None, detect_a
 
 
 if __name__ == "__main__":
+    # rembg_from_file('/home/bionicdl-saber/Music/00000000.jpg', show_image=True)
+    # xx_test = cv2.imread('/home/bionicdl-saber/Music/00000000.jpg')
+    # rembg_from_array(xx_test, show_image=True)
+    # exit()
+
     # object category
-    obj_class = "paper"
-    folder_path = '/home/bionicdl-saber/Documents/GitHub/DeepClawDev/projects/ICRA2020/GraspingData/metal/*'
+    obj_class = "box"
+
+    # folder_name = time.strftime("%Y%m%d", time.localtime())
+    ##### change the folder name here
+    folder_name = "20210514_box"
+    folder_path = os.path.join('/home/doyle/Documents/Yellow_team/20210417/GraspingData/', folder_name)
+    #folder_path = '/home/doyle/Documents/Yellow_team/20210417/GraspingData/20210417154740/'
+        #'/home/doyle/Me336/ME336-2021Spring/projects/ICRA2020/GraspingData/20210402095021/camera0/*'
     """
     the image folder tree is:
     folder_path
@@ -218,7 +213,8 @@ if __name__ == "__main__":
     """
     folder_list = glob.glob(folder_path)
     folder_list.sort()
-    region_parameter = [200, 1120, 0, 720]
+    # col_min, col_max, row_min, row_max
+    region_parameter = [0, 1280, 150, 500]
     camera_sel = "camera0"
     label_folder_name = "labels_rembg"
     for i in folder_list:
@@ -230,4 +226,4 @@ if __name__ == "__main__":
             os.makedirs(label_path)
         file_list = get_file_path(color_img_path, 'jpg')
         file_list.sort()
-        save_label(file_list, label_path, region_parameter, obj_class=obj_class)
+        save_label(file_list, label_path, region_parameter, obj_class=obj_class, detect_algo="rembg")

@@ -53,6 +53,14 @@ class FrankaController(ArmController):
         self.v = self._cfg['velocity']
         self.fk.setPositioningVelocity(self.v)
 
+    def getMatrixO_T_EE(self):
+        O_T_EE = np.array(self.fk.getO_T_EE())
+        O_Matrix = np.reshape(O_T_EE,(4,4),order='F')
+        O_Matrix_R = O_Matrix[:3, :3]
+        O_Matrix_t = O_Matrix[:3, 3:].squeeze(1)
+
+        return O_Matrix_R, O_Matrix_t
+
     def getCartesianPose(self):
         # O_T_EE: 4*4 Matrix from Base to EE
         O_T_EE = np.array(self.fk.getO_T_EE())
@@ -157,10 +165,16 @@ if __name__ == '__main__':
     '''
 
     '''FC.move_p([0.5, 0.25, 0.062, 3.14, 0.0, 0.0])'''
-    FC.move_p([0.5, 0.5, 0.05, 3.14, 0.0, 0.0])
-    print('state: ', FC.getCartesianPose())
+    #FC.move_p([0.37086436, 0.41736105, 0.05, 3.14, 0.0, 0.0])
+    #print('state: ', FC.getCartesianPose())
 
-    allState = FC.get_state()
-    print('state: ', allState)
+    #allState = FC.get_state()
+    #print('state: ', allState)
 
-    #FC.move_p([0.316505, -0.0359197, 0.584695, -3.118615035207892, -0.9868054874316178, 0.1390430462888953])
+    # 3D calibration
+    # FC.move_p([0.4, 0.0, 0.2, 3.14 - 3.14/2, -3.14/2, 0.0])
+
+    # 2D calibration
+    # FC.move_p([0.3855246, -0.008349946, 0.085, 3.14, 0, 0])  # sample point
+    FC.move_p([0.45, -0.1, 0.4, 1.57, -1.57, 0.0]) # move out
+    #FC.move_p([0.5, 0.0, 0.4, 1.57, 0, 0.0])

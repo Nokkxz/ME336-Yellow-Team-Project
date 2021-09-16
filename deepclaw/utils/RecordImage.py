@@ -62,7 +62,7 @@ if __name__ == "__main__":
     # save video
     record_s.saveVideo(file_name='d435i_static_100.avi', video_duration=10)
     # save image
-    record_s.saveImage(file_name='bg_ing.jpg')
+    # record_s.saveImage(file_name='bg_ing.jpg')
 
 
 

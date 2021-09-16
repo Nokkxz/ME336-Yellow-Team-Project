@@ -5,7 +5,7 @@ conf_thres: 0.4
 iou_thres: 0.5
 # help='cuda device, i.e. 0 or 0,1,2,3 or cpu'
 device: '0'
-view_img: False
+view_img: True
 print_result: False
 # help='filter by class': '', 0 or [0,1,2]
 classes: ''
