@@ -2,5 +2,7 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/deepclaw/modules/end2end/yolov5_zzz" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/deepclaw/utils/labelImg" vcs="Git" />
   </component>
 </project>
