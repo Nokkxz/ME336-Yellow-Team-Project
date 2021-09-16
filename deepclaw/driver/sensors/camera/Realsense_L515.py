@@ -165,12 +165,22 @@ if __name__ == '__main__':
     # x = camera.get_frame()
     time.sleep(0.1)
     x = camera.get_frame()
+    time.sleep(1)
+    x = camera.get_frame()
     color = x.color_image[0]
     infrared_image = x.infrared_image[0]
     dd = x.depth_image[0]
     print('color shape: ', color.shape)
     print('infrared shape: ', infrared_image.shape)
     print('depth shape: ', dd.shape)
+    import cv2
+
+    while 1:
+        x = camera.get_frame()
+        color = x.color_image[0]
+        cv2.imshow('tt', color)
+        cv2.waitKey(10)
+    exit()
 
     plt.imshow(color)
     plt.imshow(x.infrared_image[0])

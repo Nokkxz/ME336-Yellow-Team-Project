@@ -532,6 +532,10 @@ int FrankaDriver::gripperMove(double width)
   // Check for the maximum grasping width.
   franka::GripperState gripper_state = m_gripper->readOnce();
 
+  // Fix max_width reading less than real maximum
+  if (gripper_state.max_width < 0.12)
+    gripper_state.max_width = 0.12;
+
   if (gripper_state.max_width < width) {
     std::cout << "Finger width request is too large for the current fingers on the gripper."
               << "Maximum possible width is " << gripper_state.max_width << std::endl;
@@ -577,6 +581,10 @@ int FrankaDriver::gripperOpen()
   // Check for the maximum grasping width.
   franka::GripperState gripper_state = m_gripper->readOnce();
 
+    // Fix max_width reading less than real maximum
+  if (gripper_state.max_width < 0.12)
+    gripper_state.max_width = 0.12;
+//  std::cerr<<"!!!@@@@@=========/n"<<gripper_state.max_width<<std::endl;
   m_gripper->move(gripper_state.max_width, 0.1);
   return EXIT_SUCCESS;
 }
@@ -622,6 +630,11 @@ int FrankaDriver::gripperGrasp(double grasping_width, double force)
 
     // Check for the maximum grasping width.
     franka::GripperState gripper_state = m_gripper->readOnce();
+
+     // Fix max_width reading less than real maximum
+    if (gripper_state.max_width < 0.12)
+        gripper_state.max_width = 0.12;
+
     std::cout << "Gripper max witdh: " << gripper_state.max_width << std::endl;
     if (gripper_state.max_width < grasping_width) {
         std::cout << "Object is too large for the current fingers on the gripper."

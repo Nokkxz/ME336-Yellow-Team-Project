@@ -50,4 +50,4 @@ class Calibration2D(object):
 if __name__ == '__main__':
     path = '../../../configs/basic_config/cali2D.yaml'
     hand_eye = Calibration2D(path)
-    print(hand_eye.cvt(941, 325))
+    print(hand_eye.cvt(493, 430))
