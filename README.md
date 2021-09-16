@@ -1,5 +1,11 @@
 # ME336-Yellow-Team-Project
+
 Project source code for Collaborative Robot Learning (ME336).  
+
+## Content
+* [Project 1 : 2D Picking](/projects/readme_2Dpicking.md)
+* [Project 2 : 6D Picking](/projects/readme_6Dpicking.md)
+* [Project 3 : Agile Waste Sorting with Tossing](/projects/readme_AWST.md)
 
 **Projects:**
 * [Project 1 : 2D Picking](/projects/readme_2Dpicking.md)
@@ -12,3 +18,5 @@ Project source code for Collaborative Robot Learning (ME336).
 **Video links:**
   * [机械臂抛掷与放置物体效果对比](https://www.bilibili.com/video/BV1D54y1H7jV?spm_id_from=333.999.0.0)
   * [视觉识别的UR5机械臂自动抓取抛掷效果展示](https://www.bilibili.com/video/BV1kq4y1L7ki?spm_id_from=333.999.0.0)  
+
+
