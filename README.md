@@ -1,5 +1,5 @@
 # ME336-Yellow-Team-Project
-
+### A Garbage Sorting System Based on Visual Recognition and Robotic Arm Tossing
 Project source code for Collaborative Robot Learning (ME336).
 
 **Projects:**
