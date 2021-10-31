@@ -11,7 +11,7 @@ Project source code for Collaborative Robot Learning (ME336).
   * [Team Yellow on Agile Waste Sorting with Tossing](/material/ME336_2021_Team_Yellow_on_Agile_Waste_Sorting_with_Tossing.pdf)  
 
 **Video links:**
-  * [Comparison between throw and place](https://www.bilibili.com/video/BV1D54y1H7jV?spm_id_from=333.999.0.0)
+  * [Comparison between tossing and placing](https://www.bilibili.com/video/BV1D54y1H7jV?spm_id_from=333.999.0.0)
   * [Final result](https://www.bilibili.com/video/BV1kq4y1L7ki?spm_id_from=333.999.0.0)  
 
 
